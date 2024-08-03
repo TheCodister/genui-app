@@ -1,15 +1,29 @@
-import { openai } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import { ChatOpenAI } from "@langchain/openai";
+import { LangChainAdapter, Message } from "ai";
+import { AIMessage, HumanMessage } from "langchain/schema";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
-
-  const result = await streamText({
-    model: openai("gpt-4-turbo"),
+  const {
     messages,
+  }: {
+    messages: Message[];
+  } = await req.json();
+
+  const model = new ChatOpenAI({
+    model: "gpt-4-turbo",
+    temperature: 0,
   });
-  return result.toDataStreamResponse();
+
+  const stream = await model.stream(
+    messages.map((message) =>
+      message.role == "user"
+        ? new HumanMessage(message.content)
+        : new AIMessage(message.content)
+    )
+  );
+
+  return LangChainAdapter.toDataStreamResponse(stream);
 }

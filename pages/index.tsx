@@ -18,13 +18,13 @@ export default function Chat() {
             className={`flex my-2 ${m.role === "user" ? "justify-start" : "justify-end"}`}
           >
             {m.role === "user" ? (
-              <Avatar isBordered name="User" size="sm" className="mr-4" />
+              <Avatar isBordered className="mr-4" name="User" size="sm" />
             ) : null}
             <div
               className={`p-4 text-black rounded-xl w-72 text-start ${
                 m.role === "user"
-                  ? "bg-blue-100 text-left"
-                  : "bg-green-100 text-right"
+                  ? "bg-green-100 text-left"
+                  : "bg-blue-100 text-right"
               }`}
             >
               <Markdown>{m.content}</Markdown>
@@ -41,7 +41,7 @@ export default function Chat() {
       </div>
 
       <form
-        className="fixed bottom-0 w-full max-w-md p-4 flex items-center"
+        className="fixed bottom-0 w-full max-w-md p-4 flex items-center bg-slate-950"
         onSubmit={handleSubmit}
       >
         <Input
