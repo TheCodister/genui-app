@@ -11,6 +11,5 @@ export async function POST(req: Request) {
     model: openai("gpt-4-turbo"),
     messages,
   });
-
   return result.toDataStreamResponse();
 }
