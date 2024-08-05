@@ -1,13 +1,6 @@
 import useSWR from 'swr'
-import { MovieSearchData } from '@/types/schema/schema'
 import { BASE_URL } from '@/constants/BASE_URL'
-
-interface SearchResponse {
-  Search: MovieSearchData[]
-  totalResults: string
-  Response: string
-  Error?: string
-}
+import { SearchResponse } from '@/types/schema/schema'
 
 const fetcher = async (url: string): Promise<SearchResponse> => {
   const response = await fetch(url)
@@ -32,8 +25,8 @@ export const useGetSearchMovies = (searchQuery: string) => {
   )
 
   return {
-    Data: data?.Search || [],
-    Loading: !error && !data,
-    Error: error ? error.message : null,
+    data: data?.Search || [],
+    loading: !error && !data,
+    error: error ? error.message : null,
   }
 }

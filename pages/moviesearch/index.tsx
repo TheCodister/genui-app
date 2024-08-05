@@ -3,14 +3,13 @@ import { useGetMovie } from '@/hooks/movie/useGetMovie'
 import { useGetSearchMovies } from '@/hooks/movie/useGetSearchMovies'
 import MovieCard from '@/components/moviecard'
 import { MovieSearchData } from '@/types/schema/schema'
-import { set } from 'zod'
 
 const MovieComponent = () => {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [inputValue, setInputValue] = useState<string>('')
   const [movieTitle, setMovieTitle] = useState<string>('')
   const { data, loading, error } = useGetMovie(movieTitle)
-  const { Data } = useGetSearchMovies(searchQuery)
+  const { data: MovieData } = useGetSearchMovies(searchQuery)
 
   const handleSearch = () => {
     setMovieTitle(inputValue)
@@ -30,22 +29,22 @@ const MovieComponent = () => {
       />
       <button onClick={handleSearch}>Search</button>
 
-      {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       {data && <MovieCard movie={data} />}
-      {Data.length > 0 ? (
-        <div>
-          {Data.slice(0, 3).map((movie: MovieSearchData) => (
-            <div key={movie.imdbID}>
-              <h3>{movie.Title}</h3>
-              <p>{movie.Year}</p>
-              <img src={movie.Poster} alt={movie.Title} />
+      <div>
+        {MovieData.length > 0 ? (
+          <div>
+            <h1>Other Result:</h1>
+            <div className="flex gap-5">
+              {MovieData.slice(1, 7).map((movie: MovieSearchData) => (
+                <MovieCard key={movie.imdbID} movie={movie} />
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        <p>No results found</p>
-      )}
+          </div>
+        ) : (
+          <p>No results found</p>
+        )}
+      </div>
     </div>
   )
 }

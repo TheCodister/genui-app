@@ -25,11 +25,16 @@ export interface MovieData {
   Website: string
   Response: string
 }
-
 export interface MovieSearchData {
   Title: string
   Year: string
   imdbID: string
   Type: string
   Poster: string
+}
+export interface SearchResponse {
+  Search: MovieSearchData[]
+  totalResults: string
+  Response: string
+  Error?: string
 }

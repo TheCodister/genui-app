@@ -53,3 +53,24 @@ export default function Chat() {
     </div>
   )
 }
+// import { useState } from 'react'
+// import { Button } from '@nextui-org/button'
+// import { streamComponent } from '@/app/api/action'
+
+// export default function Page() {
+//   const [component, setComponent] = useState<React.ReactNode>()
+
+//   return (
+//     <div>
+//       <form
+//         onSubmit={async (e) => {
+//           e.preventDefault()
+//           setComponent(await streamComponent())
+//         }}
+//       >
+//         <Button>Stream Component</Button>
+//       </form>
+//       <div>{component}</div>
+//     </div>
+//   )
+// }
